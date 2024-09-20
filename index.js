@@ -26,42 +26,52 @@ const getCurrentImgIndex = () => {
     return apartmentsDataArr.findIndex((obj) => currentImgSrc.includes(obj.imgSrc.substring(1)));
 };
 
+const greyColorHex = '#FFFFFF4D';
+const whiteColorRgb = 'rgb(255, 255, 255)';
+
+const switchNavigationDots = (nextIndex) => {
+    const greyColorHex = '#FFFFFF4D';
+    const whiteColorRgb = 'rgb(255, 255, 255)';
+    const navigationDots = document.querySelectorAll('.navigation__items > .item');
+
+    const currentActiveDotIndex = Array.from(navigationDots).findIndex((it) => {
+        return window.getComputedStyle(it).backgroundColor === whiteColorRgb;
+    });
+
+    navigationDots.item(currentActiveDotIndex).style.backgroundColor = greyColorHex;
+    navigationDots.item(nextIndex).style.backgroundColor = whiteColorRgb;
+};
+
 const displayNext = () => {
     const currentImgIndex = getCurrentImgIndex();
-
-    const navigationDots = document.querySelectorAll('.item');
     let nextIndex;
+
     if (currentImgIndex < apartmentsDataArr.length - 1) {
         nextIndex = currentImgIndex + 1;
         setNewData(apartmentsDataArr[nextIndex]);
-        navigationDots.item(currentImgIndex).style.backgroundColor = '#FFFFFF4D';
-        navigationDots.item(nextIndex).style.backgroundColor = '#FFFFFF';
     }
     if (currentImgIndex === apartmentsDataArr.length - 1) {
         nextIndex = 0;
         setNewData(apartmentsDataArr[nextIndex]);
-        navigationDots.item(currentImgIndex).style.backgroundColor = '#FFFFFF4D';
-        navigationDots.item(nextIndex).style.backgroundColor = '#FFFFFF';
     }
+
+    switchNavigationDots(nextIndex);
 };
 
 const displayPrev = () => {
     const currentImgIndex = getCurrentImgIndex();
-
-    const navigationDots = document.querySelectorAll('.item');
     let nextIndex;
+
     if (currentImgIndex > 0) {
         nextIndex = currentImgIndex - 1;
         setNewData(apartmentsDataArr[nextIndex]);
-        navigationDots.item(currentImgIndex).style.backgroundColor = '#FFFFFF4D';
-        navigationDots.item(nextIndex).style.backgroundColor = '#FFFFFF';
     }
     if (currentImgIndex === 0) {
         nextIndex = apartmentsDataArr.length - 1;
         setNewData(apartmentsDataArr[apartmentsDataArr.length - 1]);
-        navigationDots.item(currentImgIndex).style.backgroundColor = '#FFFFFF4D';
-        navigationDots.item(nextIndex).style.backgroundColor = '#FFFFFF';
     }
+
+    switchNavigationDots(nextIndex);
 };
 
 const setNewData = (data) => {
@@ -74,3 +84,24 @@ const setNewData = (data) => {
 document.querySelector('.navigation__next-arrow').addEventListener('click', displayNext);
 
 document.querySelector('.navigation__prev-arrow').addEventListener('click', displayPrev);
+
+document.querySelector('.navigation__items > .item:nth-of-type(1)').addEventListener('click', () => {
+    const index = 0;
+
+    switchNavigationDots(index);
+    setNewData(apartmentsDataArr[index]);
+});
+
+document.querySelector('.navigation__items > .item:nth-of-type(2)').addEventListener('click', () => {
+    const index = 1;
+
+    switchNavigationDots(index);
+    setNewData(apartmentsDataArr[index]);
+});
+
+document.querySelector('.navigation__items > .item:nth-of-type(3)').addEventListener('click', () => {
+    const index = 2;
+
+    switchNavigationDots(index);
+    setNewData(apartmentsDataArr[index]);
+});
