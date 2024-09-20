@@ -125,7 +125,9 @@ div[class*="parameters-"] {
 }
 
 .tab {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     font-family: var(--yeseva-font);
     font-size: 14px;
     line-height: 19px;
@@ -135,6 +137,17 @@ div[class*="parameters-"] {
 
 .tab:nth-of-type(1) {
     color: var(--golden-color);
+}
+
+.tab__underline {
+    display: none;
+    width: inherit;
+    height: 1px;
+    background-color: var(--golden-color);
+}
+
+.tab:nth-of-type(1) > .tab__underline {
+    display: block;
 }
 
 img {

@@ -44,6 +44,13 @@ const switchNavigationItems = (nextIndex) => {
     });
     navigationTabs.item(currenActiveTabIndex).style.color = greyColorHex;
     navigationTabs.item(nextIndex).style.color = goldenColorRgb;
+
+    const navigationTabsUnderlines = document.querySelectorAll('.tab__underline');
+    const currentVisibleUnderlineIndex = Array.from(navigationTabsUnderlines).findIndex((underline) => {
+        return window.getComputedStyle(underline).display === 'block';
+    });
+    navigationTabsUnderlines.item(currentVisibleUnderlineIndex).style.display = 'none';
+    navigationTabsUnderlines.item(nextIndex).style.display = 'block';
 };
 
 const displayNextData = () => {
