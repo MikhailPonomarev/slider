@@ -22,7 +22,7 @@ const patriotic = {
 const apartmentsDataArray = [admiral, thieves, patriotic];
 
 const getCurrentImgIndex = () => {
-    const currentImgSrc = document.querySelector('.apartment-photo').src;
+    const currentImgSrc = document.querySelector('.project-photo').src;
     return apartmentsDataArray.findIndex((obj) => currentImgSrc.includes(obj.imgSrc.substring(1)));
 };
 
@@ -94,7 +94,7 @@ const setNewData = (data) => {
     document.querySelector('.parameters-city .parameters__text').textContent = data.city;
     document.querySelector('.parameters-apartment-area .parameters__text').textContent = data.area;
     document.querySelector('.parameters-repair-time .parameters__text').textContent = data.repairTime;
-    document.querySelector('.apartment-photo').src = data.imgSrc;
+    document.querySelector('.project-photo').src = data.imgSrc;
 };
 
 document.querySelector('.navigation__next-arrow').addEventListener('click', displayNextData);
