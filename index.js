@@ -19,59 +19,68 @@ const patriotic = {
     imgSrc: './assets/patriotic.png',
 };
 
-const apartmentsDataArr = [admiral, thieves, patriotic];
+const apartmentsDataArray = [admiral, thieves, patriotic];
 
 const getCurrentImgIndex = () => {
     const currentImgSrc = document.querySelector('.apartment-photo').src;
-    return apartmentsDataArr.findIndex((obj) => currentImgSrc.includes(obj.imgSrc.substring(1)));
+    return apartmentsDataArray.findIndex((obj) => currentImgSrc.includes(obj.imgSrc.substring(1)));
 };
 
-const greyColorHex = '#FFFFFF4D';
-const whiteColorRgb = 'rgb(255, 255, 255)';
-
-const switchNavigationDots = (nextIndex) => {
+const switchNavigationItems = (nextIndex) => {
     const greyColorHex = '#FFFFFF4D';
     const whiteColorRgb = 'rgb(255, 255, 255)';
-    const navigationDots = document.querySelectorAll('.navigation__items > .item');
 
-    const currentActiveDotIndex = Array.from(navigationDots).findIndex((it) => {
-        return window.getComputedStyle(it).backgroundColor === whiteColorRgb;
+    const navigationDots = document.querySelectorAll('.dot');
+    const currentActiveDotIndex = Array.from(navigationDots).findIndex((dot) => {
+        return window.getComputedStyle(dot).backgroundColor === whiteColorRgb;
     });
-
     navigationDots.item(currentActiveDotIndex).style.backgroundColor = greyColorHex;
     navigationDots.item(nextIndex).style.backgroundColor = whiteColorRgb;
+
+    const goldenColorRgb = 'rgb(227, 184, 115)';
+    const navigationTabs = document.querySelectorAll('.tab');
+    const currenActiveTabIndex = Array.from(navigationTabs).findIndex((tab) => {
+        return window.getComputedStyle(tab).color === goldenColorRgb;
+    });
+    navigationTabs.item(currenActiveTabIndex).style.color = greyColorHex;
+    navigationTabs.item(nextIndex).style.color = goldenColorRgb;
 };
 
-const displayNext = () => {
+const displayNextData = () => {
     const currentImgIndex = getCurrentImgIndex();
     let nextIndex;
 
-    if (currentImgIndex < apartmentsDataArr.length - 1) {
+    if (currentImgIndex < apartmentsDataArray.length - 1) {
         nextIndex = currentImgIndex + 1;
-        setNewData(apartmentsDataArr[nextIndex]);
+        setNewData(apartmentsDataArray[nextIndex]);
     }
-    if (currentImgIndex === apartmentsDataArr.length - 1) {
+    if (currentImgIndex === apartmentsDataArray.length - 1) {
         nextIndex = 0;
-        setNewData(apartmentsDataArr[nextIndex]);
+        setNewData(apartmentsDataArray[nextIndex]);
     }
 
-    switchNavigationDots(nextIndex);
+    switchNavigationItems(nextIndex);
 };
 
-const displayPrev = () => {
+const displayPrevData = () => {
     const currentImgIndex = getCurrentImgIndex();
     let nextIndex;
 
     if (currentImgIndex > 0) {
         nextIndex = currentImgIndex - 1;
-        setNewData(apartmentsDataArr[nextIndex]);
+        setNewData(apartmentsDataArray[nextIndex]);
     }
     if (currentImgIndex === 0) {
-        nextIndex = apartmentsDataArr.length - 1;
-        setNewData(apartmentsDataArr[apartmentsDataArr.length - 1]);
+        nextIndex = apartmentsDataArray.length - 1;
+        setNewData(apartmentsDataArray[apartmentsDataArray.length - 1]);
     }
 
-    switchNavigationDots(nextIndex);
+    switchNavigationItems(nextIndex);
+};
+
+const displayExactData = (index) => {
+    setNewData(apartmentsDataArray[index]);
+    switchNavigationItems(index);
 };
 
 const setNewData = (data) => {
@@ -81,27 +90,30 @@ const setNewData = (data) => {
     document.querySelector('.apartment-photo').src = data.imgSrc;
 };
 
-document.querySelector('.navigation__next-arrow').addEventListener('click', displayNext);
+document.querySelector('.navigation__next-arrow').addEventListener('click', displayNextData);
 
-document.querySelector('.navigation__prev-arrow').addEventListener('click', displayPrev);
+document.querySelector('.navigation__prev-arrow').addEventListener('click', displayPrevData);
 
-document.querySelector('.navigation__items > .item:nth-of-type(1)').addEventListener('click', () => {
-    const index = 0;
-
-    switchNavigationDots(index);
-    setNewData(apartmentsDataArr[index]);
+document.querySelector('.dot:nth-of-type(1)').addEventListener('click', () => {
+    displayExactData(0);
 });
 
-document.querySelector('.navigation__items > .item:nth-of-type(2)').addEventListener('click', () => {
-    const index = 1;
-
-    switchNavigationDots(index);
-    setNewData(apartmentsDataArr[index]);
+document.querySelector('.dot:nth-of-type(2)').addEventListener('click', () => {
+    displayExactData(1);
 });
 
-document.querySelector('.navigation__items > .item:nth-of-type(3)').addEventListener('click', () => {
-    const index = 2;
+document.querySelector('.dot:nth-of-type(3)').addEventListener('click', () => {
+    displayExactData(2);
+});
 
-    switchNavigationDots(index);
-    setNewData(apartmentsDataArr[index]);
+document.querySelector('.tab:nth-of-type(1)').addEventListener('click', () => {
+    displayExactData(0);
+});
+
+document.querySelector('.tab:nth-of-type(2)').addEventListener('click', () => {
+    displayExactData(1);
+});
+
+document.querySelector('.tab:nth-of-type(3)').addEventListener('click', () => {
+    displayExactData(2);
 });
